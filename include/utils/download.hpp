@@ -42,7 +42,7 @@ struct StoreList {
 	std::string Description;
 };
 
-struct NDS-ShopUpdate {
+struct NDSShopUpdate {
 	bool Available = false;
 	std::string Notes = "";
 	std::string Version = "";
@@ -75,7 +75,7 @@ void doneMsg(void);
 bool IsUpdateAvailable(const std::string &URL, int revCurrent);
 bool DownloadUniStore(const std::string &URL, int currentRev, std::string &fl, bool isDownload = false, bool isUDB = false);
 bool DownloadSpriteSheet(const std::string &URL, const std::string &file);
-NDS-ShopUpdate IsNDS-ShopUpdateAvailable();
+NDSShopUpdate IsNDSShopUpdateAvailable();
 void UpdateAction();
 std::vector<StoreList> FetchStores();
 C2D_Image FetchScreenshot(const std::string &URL);

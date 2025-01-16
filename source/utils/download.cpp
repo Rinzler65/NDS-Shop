@@ -773,7 +773,7 @@ bool DownloadSpriteSheet(const std::string &URL, const std::string &file) {
 /*
 	Checks for U-U updates.
 */
-NDS-ShopUpdate IsNDS-ShopUpdateAvailable() {
+NDSShopUpdate IsNDSShopUpdateAvailable() {
 	if (!checkWifiStatus()) return { false, "", "" };
 
 	Msg::DisplayMsg(Lang::get("CHECK_UU_UPDATES"));
@@ -835,7 +835,7 @@ NDS-ShopUpdate IsNDS-ShopUpdateAvailable() {
 				result_sz = 0;
 				result_written = 0;
 
-				NDS-ShopUpdate update = { false, "", "" };
+				NDSShopUpdate update = { false, "", "" };
 				update.Version = parsedAPI[0]["sha"].get_ref<const std::string &>().substr(0, 7);
 				if (parsedAPI[0].contains("commit") && parsedAPI[0]["commit"].is_object() && parsedAPI[0]["commit"].contains("message") && parsedAPI[0]["commit"]["message"].is_string())
 					update.Notes = parsedAPI[0]["commit"]["message"];
@@ -852,7 +852,7 @@ NDS-ShopUpdate IsNDS-ShopUpdateAvailable() {
 				result_sz = 0;
 				result_written = 0;
 
-				NDS-ShopUpdate update = { false, "", "" };
+				NDSShopUpdate update = { false, "", "" };
 				update.Version = parsedAPI["tag_name"];
 				if (parsedAPI["body"].is_string()) update.Notes = parsedAPI["body"];
 				update.Notes.erase(remove(update.Notes.begin(), update.Notes.end(), '\r'), update.Notes.end()); // Remove the CRLF \r's.
@@ -879,7 +879,7 @@ extern std::string _3dsxPath;
 	Execute U-U update action.
 */
 void UpdateAction() {
-	NDS-ShopUpdate res = IsNDS-ShopUpdateAvailable();
+	NDSShopUpdate res = IsNDSShopUpdateAvailable();
 	if (res.Available) {
 		bool confirmed = false;
 		int scrollIndex = 0;
