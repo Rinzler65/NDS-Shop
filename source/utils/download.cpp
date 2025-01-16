@@ -1,27 +1,22 @@
 /*
-*   This file is part of Universal-Updater
-*   Copyright (C) 2019-2021 Universal-Team
-*
-*   This program is free software: you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation, either version 3 of the License, or
-*   (at your option) any later version.
-*
-*   This program is distributed in the hope that it will be useful,
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*   GNU General Public License for more details.
-*
-*   You should have received a copy of the GNU General Public License
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*
-*   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
-*       * Requiring preservation of specified reasonable legal notices or
-*         author attributions in that material or in the Appropriate Legal
-*         Notices displayed by works containing it.
-*       * Prohibiting misrepresentation of the origin of that material,
-*         or requiring that modified versions of such material be marked in
-*         reasonable ways as different from the original version.
+*   This file is part of NDS-Shop Project
+*   Copyright (C) 2024-2025 NDS-Shop Team
+*   
+*   This program is a free open-source software that allows users
+*	to browse and download digital products.  It is based on the
+*	code of the Universal-Updater project from Universal-Team.
+*   
+*   It's distributed under the terms of the GNU General Public
+*	License and it's completely free to use and modify.
+*   
+*   This program comes with no warranty, but we are constantly
+*	working on improving its functionality and user experience.
+*   
+*   If you have any suggestions or find any bugs, please let us know!
+*   
+*   NDS-Shop Team reserves the right to update the license terms
+*	at any time without prior notice.
+*   Any changes to the code must be clearly marked as such to avoid confusion.
 */
 
 #include "animation.hpp"
@@ -778,7 +773,7 @@ bool DownloadSpriteSheet(const std::string &URL, const std::string &file) {
 /*
 	Checks for U-U updates.
 */
-UUUpdate IsUUUpdateAvailable() {
+NDS-ShopUpdate IsNDS-ShopUpdateAvailable() {
 	if (!checkWifiStatus()) return { false, "", "" };
 
 	Msg::DisplayMsg(Lang::get("CHECK_UU_UPDATES"));
@@ -840,7 +835,7 @@ UUUpdate IsUUUpdateAvailable() {
 				result_sz = 0;
 				result_written = 0;
 
-				UUUpdate update = { false, "", "" };
+				NDS-ShopUpdate update = { false, "", "" };
 				update.Version = parsedAPI[0]["sha"].get_ref<const std::string &>().substr(0, 7);
 				if (parsedAPI[0].contains("commit") && parsedAPI[0]["commit"].is_object() && parsedAPI[0]["commit"].contains("message") && parsedAPI[0]["commit"]["message"].is_string())
 					update.Notes = parsedAPI[0]["commit"]["message"];
@@ -857,7 +852,7 @@ UUUpdate IsUUUpdateAvailable() {
 				result_sz = 0;
 				result_written = 0;
 
-				UUUpdate update = { false, "", "" };
+				NDS-ShopUpdate update = { false, "", "" };
 				update.Version = parsedAPI["tag_name"];
 				if (parsedAPI["body"].is_string()) update.Notes = parsedAPI["body"];
 				update.Notes.erase(remove(update.Notes.begin(), update.Notes.end(), '\r'), update.Notes.end()); // Remove the CRLF \r's.
@@ -884,7 +879,7 @@ extern std::string _3dsxPath;
 	Execute U-U update action.
 */
 void UpdateAction() {
-	UUUpdate res = IsUUUpdateAvailable();
+	NDS-ShopUpdate res = IsNDS-ShopUpdateAvailable();
 	if (res.Available) {
 		bool confirmed = false;
 		int scrollIndex = 0;
@@ -930,10 +925,10 @@ void UpdateAction() {
 		Result dlRes;
 		if (config->updatenightly())
 			dlRes = ScriptUtils::downloadFile("https://raw.githubusercontent.com//Rinzler65/files/master/builds/NDS-Shop/NDS-Shop." + std::string(is3DSX ? "3dsx" : "cia"),
-					(is3DSX ? _3dsxPath : "sdmc:/NDS-Shop.cia"), Lang::get("DONLOADING_UNIVERSAL_UPDATER"), true);
+					(is3DSX ? _3dsxPath : "sdmc:/NDS-Shop.cia"), Lang::get("DONLOADING_NDS_SHOP"), true);
 		else
 			dlRes = ScriptUtils::downloadRelease("Rinzler65/NDS-Shop", (is3DSX ? "NDS-Shop.3dsx" : "NDS-Shop.cia"),
-					(is3DSX ? _3dsxPath : "sdmc:/NDS-Shop.cia"), false, Lang::get("DONLOADING_UNIVERSAL_UPDATER"), true);
+					(is3DSX ? _3dsxPath : "sdmc:/NDS-Shop.cia"), false, Lang::get("DONLOADING_NDS_SHOP"), true);
 
 		if (dlRes == ScriptState::NONE) {
 			if (is3DSX) {
@@ -942,7 +937,7 @@ void UpdateAction() {
 				return;
 			}
 
-			ScriptUtils::installFile("sdmc:/NDS-Shop.cia", false, Lang::get("INSTALL_UNIVERSAL_UPDATER"), true);
+			ScriptUtils::installFile("sdmc:/NDS-Shop.cia", false, Lang::get("INSTALL_NDS_SHOP"), true);
 			ScriptUtils::removeFile("sdmc:/NDS-Shop.cia", true);
 			Msg::waitMsg(Lang::get("UPDATE_DONE"));
 			exiting = true;
