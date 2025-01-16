@@ -159,7 +159,7 @@ Config::Config() {
 /* Write to config if changesMade. */
 void Config::save() {
 	if (this->changesMade) {
-		FILE *file = fopen("sdmc:/3ds/Universal-Updater/NDS-Shop/Config.json", "w");
+		FILE *file = fopen("sdmc:/3ds/Universal-Updater/NDS-Shop/config/Config.json", "w");
 
 		/* Set values. */
 		this->setString("Language", this->language());
