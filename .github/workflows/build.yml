@@ -54,7 +54,7 @@ jobs:
           mkdir -p ~/artifacts
           cp NDS-Shop.3dsx ~/artifacts
           cp NDS-Shop.cia ~/artifacts
-          echo "commit_tag=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null" >> $GITHUB_OUTPUT
+          echo "commit_tag=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)" >> $GITHUB_OUTPUT
           echo "commit_hash=$(git log --format=%h -1)" >> $GITHUB_OUTPUT
 
           # Webhook info
